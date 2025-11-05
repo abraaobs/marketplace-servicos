@@ -1,0 +1,59 @@
+/* reset / container */
+.container { max-width: 960px; margin: 24px auto; padding: 0 16px; }
+
+/* HEADER: mantém layout original (esquerda título, direita nav) */
+.card.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin: 16px 0;
+}
+
+/* título */
+.card.header > div:first-child strong {
+  color: #0b61d0;
+  font-size: 1.15rem;
+}
+
+/* NAV (direita) alinhada */
+.card.header nav {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* BOTÕES DO MENU — estilo similar aos cards */
+.card.header .nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #0b61d0;
+  border: 1px solid rgba(11,97,208,0.9);
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(11,97,208,0.08);
+  transition: transform .14s ease, background-color .14s ease, color .14s ease;
+}
+
+/* hover */
+.card.header .nav-btn:hover {
+  background-color: #0b61d0;
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(11,97,208,0.18);
+}
+
+/* small spacing to keep layout bonito */
+.card.header nav .nav-btn + .nav-btn { margin-left: 6px; }
+
+/* Serviços: garantir que os cards mantenham estilo já criado */
+.services-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:12px; padding: 8px 0; }
+.service-card { background:white; padding:16px; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.06); }
+.service-card h3 { color:#0b61d0; margin:0 0 8px; }
