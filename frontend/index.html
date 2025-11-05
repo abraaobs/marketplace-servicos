@@ -1,12 +1,293 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="pt-br">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Marketserv</title>
+    <title>Marketserv - Serviços e Reparos Residenciais</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --azul-marinho: #0a1f44;
+        --whatsapp: #25d366;
+        --instagram: #e1306c;
+      }
+
+      body {
+        background-color: #f8f9fa;
+      }
+
+      .navbar {
+        background-color: var(--azul-marinho);
+      }
+
+      .hero {
+        background: linear-gradient(rgba(10, 31, 68, 0.8), rgba(10, 31, 68, 0.8)),
+          url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80")
+            center/cover no-repeat;
+        color: white;
+        padding: 140px 0;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-weight: 700;
+        font-size: 2.8rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+      }
+
+      .btn-light {
+        background-color: #fff;
+        color: var(--azul-marinho);
+        border: none;
+        font-weight: 500;
+      }
+
+      .btn-light:hover {
+        background-color: #eaeaea;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        transition: 0.3s;
+      }
+
+      footer {
+        background-color: var(--azul-marinho);
+        color: white;
+        padding: 25px 0;
+      }
+
+      /* Ícones flutuantes */
+      .social-icons {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        z-index: 1000;
+      }
+
+      .social-icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        font-size: 24px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s;
+      }
+
+      .social-icons a:hover {
+        transform: scale(1.1);
+      }
+
+      .whatsapp {
+        background-color: var(--whatsapp);
+      }
+
+      .instagram {
+        background: linear-gradient(
+          45deg,
+          #f58529,
+          #dd2a7b,
+          #8134af,
+          #515bd4
+        );
+      }
+    </style>
   </head>
+
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">Marketserv</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#servicos">Serviços</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="login.html">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="cadastro.html">Cadastro</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="cadastro-servico.html">Cadastrar Serviço</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="display-5 fw-bold">
+          Soluções completas para sua casa ou negócio 🏠🔧
+        </h1>
+        <p class="lead mt-3">
+          Jardinagem, obras, encanamento, pintura e reparos — tudo no mesmo
+          lugar.<br />
+          Com o Marketserv, o profissional ideal está a um clique de distância!
+        </p>
+        <a href="#servicos" class="btn btn-light btn-lg mt-4 shadow-sm">
+          Saiba mais
+        </a>
+      </div>
+    </section>
+
+    <!-- Serviços -->
+    <section id="servicos" class="py-5 bg-white">
+      <div class="container">
+        <h2 class="text-center fw-bold mb-5" style="color: var(--azul-marinho)">
+          Nossos Serviços 🔨🌿💡
+        </h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body text-center">
+                <i
+                  class="bi bi-brush display-5"
+                  style="color: var(--azul-marinho)"
+                ></i>
+                <h5 class="mt-3">Pintura & Reforma</h5>
+                <p>Deixe seu ambiente renovado com profissionais qualificados.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body text-center">
+                <i
+                  class="bi bi-tools display-5"
+                  style="color: var(--azul-marinho)"
+                ></i>
+                <h5 class="mt-3">Reparos Gerais</h5>
+                <p>Montagem, ajustes e consertos para o lar e escritório.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body text-center">
+                <i
+                  class="bi bi-flower1 display-5"
+                  style="color: var(--azul-marinho)"
+                ></i>
+                <h5 class="mt-3">Jardinagem & Manutenção</h5>
+                <p>
+                  Cuide do seu jardim e área externa com quem entende do assunto.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body text-center">
+                <i
+                  class="bi bi-droplet display-5"
+                  style="color: var(--azul-marinho)"
+                ></i>
+                <h5 class="mt-3">Encanamento</h5>
+                <p>Conserto de vazamentos, instalações e manutenção hidráulica.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body text-center">
+                <i
+                  class="bi bi-lightbulb display-5"
+                  style="color: var(--azul-marinho)"
+                ></i>
+                <h5 class="mt-3">Serviços Elétricos</h5>
+                <p>Troca de tomadas, iluminação e manutenção geral elétrica.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body text-center">
+                <i
+                  class="bi bi-house-door display-5"
+                  style="color: var(--azul-marinho)"
+                ></i>
+                <h5 class="mt-3">Reparos em Móveis</h5>
+                <p>
+                  Ajuste, montagem e restauração de móveis com qualidade e
+                  confiança.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ícones de redes sociais -->
+    <div class="social-icons">
+      <a
+        href="https://wa.me/5583988851184"
+        target="_blank"
+        class="whatsapp"
+        title="Fale conosco no WhatsApp"
+      >
+        <i class="bi bi-whatsapp"></i>
+      </a>
+      <a
+        href="https://instagram.com/marketserv"
+        target="_blank"
+        class="instagram"
+        title="Siga-nos no Instagram"
+      >
+        <i class="bi bi-instagram"></i>
+      </a>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="text-center">
+      <div class="container">
+        <p class="mb-0">
+          © 2025 Marketserv — Soluções para o lar e negócios. Todos os direitos
+          reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
