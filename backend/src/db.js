@@ -1,3 +1,4 @@
+// src/db.js
 const { Sequelize, DataTypes } = require("sequelize");
 const path = require("path");
 
@@ -8,7 +9,11 @@ const sequelize = new Sequelize({
   logging: false,
 });
 
-// Modelo de Serviços
+// Importa o modelo User (já existe em src/models/user.js)
+const defineUser = require("./models/user");
+const User = defineUser(sequelize);
+
+// Modelo de Serviços (caso já exista)
 const Service = sequelize.define("Service", {
   title: {
     type: DataTypes.STRING,
@@ -22,9 +27,16 @@ const Service = sequelize.define("Service", {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
-  image: {
-    type: DataTypes.STRING,
+  providerId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
   },
+}, {
+  tableName: "Services",
+  timestamps: true,
 });
 
-module.exports = { sequelize, Service };
+// Relacionamento opcional
+Service.belongsTo(User, { foreignKey: "providerId", as: "provider" });
+
+module.exports = { sequelize, User, Service };
