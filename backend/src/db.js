@@ -2,41 +2,26 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const path = require("path");
 
-// Conexão com o banco SQLite
+// Conexão SQLite
 const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: path.join(__dirname, "..", "database.sqlite"),
-  logging: false,
+  logging: false
 });
 
-// Importa o modelo User (já existe em src/models/user.js)
+// Importa modelo User
 const defineUser = require("./models/user");
 const User = defineUser(sequelize);
 
-// Modelo de Serviços (caso já exista)
+// Exemplo de outro modelo (Service)
 const Service = sequelize.define("Service", {
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  price: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  providerId: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-  },
-}, {
-  tableName: "Services",
-  timestamps: true,
+  title: DataTypes.STRING,
+  description: DataTypes.TEXT,
+  price: DataTypes.FLOAT,
+  providerId: DataTypes.INTEGER
 });
 
-// Relacionamento opcional
+// Relacionamentos
 Service.belongsTo(User, { foreignKey: "providerId", as: "provider" });
 
 module.exports = { sequelize, User, Service };

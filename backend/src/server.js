@@ -1,8 +1,8 @@
-// src/server.js
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { sequelize } = require('./db');
+
 
 // Rotas
 const authRoutes = require('./routes/authRoutes');
@@ -30,6 +30,9 @@ const PORT = process.env.PORT || 5000;
 
 async function startServer() {
   try {
+    await sequelize.authenticate();
+    console.log('🔗 Conectado ao banco com sucesso!');
+
     await sequelize.sync(); // cria tabelas se não existirem
     app.listen(PORT, () => {
       console.log(`✅ Servidor rodando na porta ${PORT}`);
