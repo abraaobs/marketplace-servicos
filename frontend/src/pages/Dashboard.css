@@ -1,0 +1,75 @@
+.dashboard-container {
+  max-width: 900px;
+  margin: 100px auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-container h1 {
+  text-align: center;
+  color: #0c2d57;
+  margin-bottom: 1rem;
+}
+
+.dashboard-container p {
+  text-align: center;
+  color: #555;
+}
+
+.dashboard-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background-color: #f9fafc;
+}
+
+.dashboard-section h2 {
+  color: #0c2d57;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-list {
+  list-style: none;
+  padding-left: 0;
+  color: #333;
+}
+
+.dashboard-list li {
+  background-color: #eef3f8;
+  padding: 0.5rem 1rem;
+  margin: 0.3rem 0;
+  border-radius: 8px;
+}
+
+.btn-primary {
+  display: inline-block;
+  background-color: #0c2d57;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #174d9a;
+}
+
+.form-container {
+  margin-top: 1rem;
+}
+
+.form-container input,
+.form-container textarea {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: none;
+}
