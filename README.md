@@ -5,8 +5,13 @@
 **Curso:** Análise e Desenvolvimento de Sistemas  
 **Período:** 2025.2  
 **Autor:** Abraão Silva  
+<<<<<<< HEAD
 **Instituição:** UEPB 
 
+=======
+**Instituição:** —  
+**Orientador:** —  
+>>>>>>> 162e572ae90dcff2f8b854a7dec2b09e89056d8f
 
 ---
 
