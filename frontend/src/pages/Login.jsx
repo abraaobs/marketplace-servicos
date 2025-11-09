@@ -1,33 +1,88 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+// frontend/src/pages/Login.jsx
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const navigate = useNavigate()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth(); // ✅ usa o login do AuthContext
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    try {
-      // placeholder: no real auth implemented yet
-      const res = await axios.post('/api/auth/register', { name: 'temp', email, password, role: 'cliente' })
-      console.log(res.data)
-      navigate('/')
-    } catch (err) {
-      console.error(err)
-      alert('Erro ao autenticar (mock)')
+    e.preventDefault();
+    setError("");
+
+    console.log("🟢 handleSubmit foi chamado!");
+    console.log("📩 Email:", email);
+    console.log("🔑 Senha:", password);
+
+    const result = await login(email, password);
+    console.log("📦 Resultado do login:", result);
+
+    if (!result.ok) {
+      setError(result.message || "Erro no login");
+      alert("❌ Falha no login: " + (result.message || "Erro desconhecido"));
+      return;
     }
-  }
+
+    const user = result.user;
+    console.log("✅ Login OK! Redirecionando para:", user?.role);
+
+    // Redireciona conforme o tipo de usuário
+    if (user?.role === "prestador") {
+      alert("🧭 Redirecionando para /painel-prestador");
+      navigate("/painel-prestador");
+    } else if (user?.role === "cliente") {
+      alert("🧭 Redirecionando para /painel-cliente");
+      navigate("/painel-cliente");
+    } else {
+      alert("🧭 Redirecionando para /");
+      navigate("/");
+    }
+  };
 
   return (
-    <div className="card">
-      <h3>Login</h3>
+    <div style={{ maxWidth: 420, margin: "2rem auto" }}>
+      <h2 style={{ textAlign: "center" }}>Login</h2>
       <form onSubmit={handleSubmit}>
-        <div><label>Email</label><br/><input value={email} onChange={e => setEmail(e.target.value)} required /></div>
-        <div><label>Senha</label><br/><input type="password" value={password} onChange={e => setPassword(e.target.value)} required /></div>
-        <button type="submit">Entrar (mock)</button>
+        <label>Email</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          style={{ width: "100%", padding: "8px", marginBottom: "8px" }}
+        />
+
+        <label>Senha</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          style={{ width: "100%", padding: "8px", marginBottom: "12px" }}
+        />
+
+        {error && (
+          <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
+        )}
+
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "10px",
+            backgroundColor: "#0c2d57",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          Entrar
+        </button>
       </form>
     </div>
-  )
+  );
 }
