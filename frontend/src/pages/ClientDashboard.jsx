@@ -10,8 +10,6 @@ export default function ClientDashboard() {
       <section className="dashboard-section">
         <h2>Serviços Contratados</h2>
         <ul className="dashboard-list">
-          <li>Pintura & Reforma - Em andamento</li>
-          <li>Jardinagem - Concluído</li>
         </ul>
       </section>
 

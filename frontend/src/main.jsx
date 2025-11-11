@@ -5,9 +5,11 @@ import App from "./App";
 import { AuthProvider } from "./context/AuthContext";
 import "./styles.css";
 
+console.log("✅ MAIN JSX carregado!");
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>
+    <AuthProvider>    {/* AuthProvider no topo para todas as rotas */}
       <BrowserRouter>
         <App />
       </BrowserRouter>

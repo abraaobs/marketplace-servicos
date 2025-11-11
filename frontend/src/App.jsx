@@ -5,7 +5,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ClientDashboard from "./pages/ClientDashboard";
-import ProviderDashboard from "./pages/ProviderDashboard";
+import ProviderDashboard from "./pages/PainelPrestador";
+import PainelPrestador from "./pages/PainelPrestador";
 
 export default function App() {
   const { user, logout } = useAuth();
@@ -51,7 +52,7 @@ export default function App() {
           <Route path="/painel-cliente" element={<ClientDashboard />} />
         )}
         {user && user.role === "prestador" && (
-          <Route path="/painel-prestador" element={<ProviderDashboard />} />
+          <Route path="/painel-prestador" element={<PainelPrestador />} />
         )}
       </Routes>
     </div>

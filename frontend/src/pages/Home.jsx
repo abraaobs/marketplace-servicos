@@ -26,44 +26,38 @@ export default function Home() {
 
       {/* Seção de serviços */}
       <section className="services-section">
-        <h2 className="services-title">Nossos Serviços 🛠️🌿💡</h2>
 
         <div className="services-grid">
           <div className="service-card">
             <i className="icon">🖌️</i>
             <h3>Pintura & Reforma</h3>
-            <p>Deixe seu ambiente renovado com profissionais qualificados.</p>
           </div>
 
           <div className="service-card">
             <i className="icon">🔧</i>
             <h3>Reparos Gerais</h3>
-            <p>Montagem, ajustes e consertos para o lar e escritório.</p>
           </div>
 
           <div className="service-card">
             <i className="icon">🌼</i>
             <h3>Jardinagem & Manutenção</h3>
-            <p>Cuide do seu jardim e área externa com quem entende do assunto.</p>
           </div>
 
           <div className="service-card">
             <i className="icon">💧</i>
             <h3>Encanamento</h3>
-            <p>Conserto de vazamentos, instalações e manutenção hidráulica.</p>
           </div>
 
           <div className="service-card">
             <i className="icon">💡</i>
             <h3>Serviços Elétricos</h3>
-            <p>Troca de tomadas, iluminação e manutenção geral elétrica.</p>
           </div>
 
           <div className="service-card">
             <i className="icon">🏠</i>
             <h3>Reparos em Móveis</h3>
             <p>
-              Ajuste, montagem e restauração de móveis com qualidade e confiança.
+              
             </p>
           </div>
         </div>
