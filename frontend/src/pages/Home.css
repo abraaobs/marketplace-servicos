@@ -87,3 +87,15 @@
 .icon {
   font-size: 2rem;
 }
+/* SERVIÇOS DISPONÍVEIS */
+.available-services {
+  margin-top: 80px;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.available-services h2 {
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  color: #0c2d57;
+}

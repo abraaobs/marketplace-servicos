@@ -1,44 +1,46 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const { sequelize } = require('./db');
-
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const { sequelize } = require("./db");
 
 // Rotas
-const authRoutes = require('./routes/authRoutes');
-const servicesRoutes = require('./routes/servicesRoutes'); // se existir
+const authRoutes = require("./routes/authRoutes");
+const servicesRoutes = require("./routes/servicesRoutes");
 
 const app = express();
 
-// Middlewares globais
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// Usa as rotas
-app.use('/api/auth', authRoutes);
-if (servicesRoutes) {
-  app.use('/api/services', servicesRoutes);
-}
+// Expor imagens locais
+app.use("/uploads", express.static("uploads"));
 
-// Rota básica de teste
-app.get('/', (req, res) => {
-  res.send('API Marketplace está rodando 🚀');
+// Rotas
+app.use("/api/auth", authRoutes);
+app.use("/api/services", servicesRoutes);
+
+// Teste
+app.get("/", (req, res) => {
+  res.send("API Marketplace está rodando 🚀");
 });
 
-// Inicializa o servidor e sincroniza o banco
+// Inicialização
 const PORT = process.env.PORT || 5000;
 
 async function startServer() {
   try {
     await sequelize.authenticate();
-    console.log('🔗 Conectado ao banco com sucesso!');
+    console.log("🔗 Banco conectado com sucesso!");
 
-    await sequelize.sync(); // cria tabelas se não existirem
+    await sequelize.sync();
+    console.log("🗃️ Tabelas sincronizadas.");
+
     app.listen(PORT, () => {
-      console.log(`✅ Servidor rodando na porta ${PORT}`);
+      console.log(`⚡ Servidor rodando na porta ${PORT}`);
     });
   } catch (error) {
-    console.error('Erro ao iniciar o servidor:', error);
+    console.error("Erro ao iniciar o servidor:", error);
   }
 }
 

@@ -1,65 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import api from "../api";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const res = await api.get("/services");
+        setServices(res.data);
+      } catch (err) {
+        console.error("Erro ao buscar serviços:", err);
+      }
+    };
+    fetchServices();
+  }, []);
 
   return (
     <div className="home-container">
-      {/* Seção principal (hero) */}
-      <section className="hero">
-        <div className="hero-content">
-          <h1>Soluções completas para sua casa ou negócio 🏠🔧</h1>
-          <p>
-            Jardinagem, obras, encanamento, pintura e reparos — tudo no mesmo lugar. <br />
-            Com o <strong>Marketserv</strong>, o profissional ideal está a um clique de distância!
-          </p>
-          <button
-            className="hero-button"
-            onClick={() => navigate("/login")}
-          >
-            Ir para Login
-          </button>
-        </div>
-      </section>
-
-      {/* Seção de serviços */}
+      {/* SERVIÇOS DO BACKEND */}
       <section className="services-section">
-
+        <h2 className="services-title">Serviços disponíveis</h2>
         <div className="services-grid">
-          <div className="service-card">
-            <i className="icon">🖌️</i>
-            <h3>Pintura & Reforma</h3>
-          </div>
-
-          <div className="service-card">
-            <i className="icon">🔧</i>
-            <h3>Reparos Gerais</h3>
-          </div>
-
-          <div className="service-card">
-            <i className="icon">🌼</i>
-            <h3>Jardinagem & Manutenção</h3>
-          </div>
-
-          <div className="service-card">
-            <i className="icon">💧</i>
-            <h3>Encanamento</h3>
-          </div>
-
-          <div className="service-card">
-            <i className="icon">💡</i>
-            <h3>Serviços Elétricos</h3>
-          </div>
-
-          <div className="service-card">
-            <i className="icon">🏠</i>
-            <h3>Reparos em Móveis</h3>
-            <p>
-              
-            </p>
-          </div>
+          {services.length > 0 ? (
+            services.map((service) => (
+              <div key={service.id} className="service-card">
+                {service.image && (
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="service-image"
+                  />
+                )}
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
+                <p>
+                  <strong>Preço:</strong> R$ {service.price}
+                </p>
+                {service.provider && (
+                  <p className="provider-name">
+                    Prestador: {service.provider.name}
+                  </p>
+                )}
+              </div>
+            ))
+          ) : (
+            <p>Nenhum serviço disponível no momento.</p>
+          )}
         </div>
       </section>
     </div>

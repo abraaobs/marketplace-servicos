@@ -1,4 +1,3 @@
-// src/db.js
 const { Sequelize, DataTypes } = require("sequelize");
 const path = require("path");
 
@@ -13,15 +12,42 @@ const sequelize = new Sequelize({
 const defineUser = require("./models/user");
 const User = defineUser(sequelize);
 
-// Exemplo de outro modelo (Service)
+// Modelo Service
 const Service = sequelize.define("Service", {
-  title: DataTypes.STRING,
-  description: DataTypes.TEXT,
-  price: DataTypes.FLOAT,
-  providerId: DataTypes.INTEGER
+  title: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
+
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+
+  price: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    validate: {
+      min: 0
+    }
+  },
+
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true // pode ser null, se não enviar imagem
+  },
+
+  providerId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
 });
 
-// Relacionamentos
-Service.belongsTo(User, { foreignKey: "providerId", as: "provider" });
+// Relacionamento
+Service.belongsTo(User, {
+  foreignKey: "providerId",
+  as: "provider",
+  onDelete: "CASCADE"
+});
 
 module.exports = { sequelize, User, Service };
