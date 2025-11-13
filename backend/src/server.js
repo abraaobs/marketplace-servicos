@@ -6,6 +6,7 @@ const { sequelize } = require("./db");
 // Rotas
 const authRoutes = require("./routes/authRoutes");
 const servicesRoutes = require("./routes/servicesRoutes");
+const ordersRoutes = require('./routes/ordersRoutes');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use("/uploads", express.static("uploads"));
 // Rotas
 app.use("/api/auth", authRoutes);
 app.use("/api/services", servicesRoutes);
+app.use("/api/orders", ordersRoutes);
 
 // Teste
 app.get("/", (req, res) => {

@@ -49,5 +49,30 @@ Service.belongsTo(User, {
   as: "provider",
   onDelete: "CASCADE"
 });
+// Modelo Order
+const Order = sequelize.define("Order", {
+  serviceId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  customerId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  providerId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  status: {
+    type: DataTypes.STRING,
+    defaultValue: "pendente"  // pendente | aceito | recusado | concluído
+  }
+});
 
-module.exports = { sequelize, User, Service };
+// Relacionamentos
+Order.belongsTo(Service, { foreignKey: "serviceId", as: "service" });
+Order.belongsTo(User, { foreignKey: "customerId", as: "customer" });
+Order.belongsTo(User, { foreignKey: "providerId", as: "provider" });
+
+
+module.exports = { sequelize, User, Service, Order };

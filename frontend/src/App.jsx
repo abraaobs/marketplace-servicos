@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import ClientDashboard from "./pages/ClientDashboard";
 import ProviderDashboard from "./pages/PainelPrestador";
 import PainelPrestador from "./pages/PainelPrestador";
+import Contratados from "./pages/Contratados";
 
 export default function App() {
   const { user, logout } = useAuth();
@@ -18,11 +19,18 @@ export default function App() {
 
         {user ? (
           <>
-            {user.role === "cliente" && (
-              <Link style={{ color: "#fff", marginRight: "15px" }} to="/painel-cliente">
-                Painel Cliente
-              </Link>
-            )}
+           {user.role === "cliente" && (
+  <>
+    <Link style={{ color: "#fff", marginRight: "15px" }} to="/painel-cliente">
+      Painel Cliente
+    </Link>
+
+    <Link style={{ color: "#fff", marginRight: "15px" }} to="/contratados">
+      Contratados
+    </Link>
+  </>
+)}
+
             {user.role === "prestador" && (
               <Link style={{ color: "#fff", marginRight: "15px" }} to="/painel-prestador">
                 Painel Prestador
@@ -54,6 +62,9 @@ export default function App() {
         {user && user.role === "prestador" && (
           <Route path="/painel-prestador" element={<PainelPrestador />} />
         )}
+        {user && user.role === "cliente" && (
+  <Route path="/contratados" element={<Contratados />} />
+)}
       </Routes>
     </div>
   );
