@@ -21,6 +21,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/auth", authRoutes);
 app.use("/api/services", servicesRoutes);
 app.use("/api/orders", ordersRoutes);
+app.use("/api/orders", require("./routes/ordersRoutes"));
 
 // Teste
 app.get("/", (req, res) => {
@@ -35,7 +36,7 @@ async function startServer() {
     await sequelize.authenticate();
     console.log("🔗 Banco conectado com sucesso!");
 
-    await sequelize.sync();
+    sequelize.sync();
     console.log("🗃️ Tabelas sincronizadas.");
 
     app.listen(PORT, () => {

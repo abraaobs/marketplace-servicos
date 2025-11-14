@@ -38,17 +38,43 @@ export default function ClientDashboard() {
         <h2>Serviços Contratados</h2>
 
         {orders.length === 0 ? (
-          <p>Você ainda não contratou nenhum serviço.</p>
-        ) : (
-          <ul className="dashboard-list">
-            {orders.slice(0, 3).map((order) => (
-              <li key={order.id} className="dashboard-item">
-                <strong>{order.service.title}</strong>
-                <span>Status: {order.status}</span>
-              </li>
-            ))}
-          </ul>
+  <p>Você ainda não contratou nenhum serviço.</p>
+) : (
+  <div className="services-grid">
+    {orders.slice(0, 3).map((order) => (
+      <div key={order.id} className="service-card">
+        
+        {order.service.image && (
+          <img
+            src={order.service.image}
+            alt={order.service.title}
+            className="service-image"
+            style={{
+              width: "100%",
+              borderRadius: "12px",
+              marginBottom: "10px"
+            }}
+          />
         )}
+
+        <h3>{order.service.title}</h3>
+
+        <p>
+          <strong>Preço:</strong> R$ {Number(order.service.price).toFixed(2)}
+        </p>
+
+        <p>
+          <strong>Prestador:</strong> {order.service.provider?.name ?? "Desconhecido"}
+        </p>
+
+        <p>
+          <strong>Status:</strong> {order.status}
+        </p>
+      </div>
+    ))}
+  </div>
+)}
+
 
         <button className="btn-primary" onClick={() => navigate("/contratados")}>
           Ver todos os contratados

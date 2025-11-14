@@ -71,8 +71,8 @@ const Order = sequelize.define("Order", {
 
 // Relacionamentos
 Order.belongsTo(Service, { foreignKey: "serviceId", as: "service" });
+Service.hasMany(Order, { foreignKey: "serviceId" });
 Order.belongsTo(User, { foreignKey: "customerId", as: "customer" });
 Order.belongsTo(User, { foreignKey: "providerId", as: "provider" });
-
 
 module.exports = { sequelize, User, Service, Order };

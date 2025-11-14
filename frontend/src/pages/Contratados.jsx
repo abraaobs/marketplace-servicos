@@ -32,7 +32,7 @@ export default function Contratados() {
             <div key={order.id} className="order-card">
 
               {/* IMAGEM */}
-              {order.service.image && (
+              {order.service?.image && (
                 <img
                   src={
                     order.service.image.startsWith("/uploads")
@@ -45,10 +45,22 @@ export default function Contratados() {
               )}
 
               <div className="order-info">
-                <h3>{order.service.title}</h3>
-                <p>{order.service.description}</p>
-                <p><strong>Preço:</strong> R$ {order.service.price}</p>
+                <h3>{order.service?.title}</h3>
+                <p>{order.service?.description}</p>
+                <p><strong>Preço:</strong> R$ {order.service?.price}</p>
                 <p><strong>Status:</strong> {order.status}</p>
+
+                <hr />
+
+                {/* PRESTADOR */}
+                <p>
+                  <strong>Prestador:</strong>{" "}
+                  {order.service?.provider?.name ?? "Desconhecido"}
+                </p>
+                <p>
+                  <strong>Email:</strong>{" "}
+                  {order.service?.provider?.email ?? "-"}
+                </p>
               </div>
 
             </div>

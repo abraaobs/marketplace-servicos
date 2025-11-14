@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Order, Service } = require("../db");
+const { Order, Service, User } = require("../db");
 
 // Criar pedido
 router.post("/", async (req, res) => {
@@ -27,12 +27,21 @@ router.post("/", async (req, res) => {
   }
 });
 
+// ========================
 // Listar pedidos do prestador
+// ========================
 router.get("/provider/:id", async (req, res) => {
   try {
     const orders = await Order.findAll({
       where: { providerId: req.params.id },
-      include: [{ model: Service, as: "service" }]
+      include: [
+        { model: Service, as: "service" },
+        {
+          model: User,
+          as: "customer",
+          attributes: ["id", "name", "email"]
+        }
+      ]
     });
 
     res.json(orders);
@@ -41,6 +50,31 @@ router.get("/provider/:id", async (req, res) => {
     res.status(500).json({ message: "Erro ao buscar pedidos" });
   }
 });
+
+// ========================
+// Listar pedidos do cliente
+// ========================
+router.get("/customer/:id", async (req, res) => {
+  try {
+    const orders = await Order.findAll({
+      where: { customerId: req.params.id },
+      include: [
+        { model: Service, as: "service" },
+        {
+          model: User,
+          as: "provider",
+          attributes: ["id", "name", "email"]
+        }
+      ]
+    });
+
+    res.json(orders);
+  } catch (err) {
+    console.error("Erro ao buscar pedidos do cliente:", err);
+    res.status(500).json({ message: "Erro ao buscar pedidos do cliente" });
+  }
+});
+
 
 // Atualizar status do pedido
 router.put("/:id", async (req, res) => {

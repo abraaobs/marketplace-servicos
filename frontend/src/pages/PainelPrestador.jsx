@@ -5,26 +5,33 @@ import { useAuth } from "../context/AuthContext";
 
 export default function PainelPrestador() {
   const { user } = useAuth();
+
   const [services, setServices] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [editingId, setEditingId] = useState(null);
 
   const [editData, setEditData] = useState({
     title: "",
     description: "",
     price: "",
-    image: null, // arquivo local
+    image: null
   });
 
   const [newService, setNewService] = useState({
     title: "",
     description: "",
     price: "",
-    image: null,
+    image: null
   });
 
-  // === Carrega serviços do prestador ===
+  // =====================================================
+  // 🔵 Carregar serviços e pedidos do prestador
+  // =====================================================
   useEffect(() => {
-    if (user) fetchServices();
+    if (user) {
+      fetchServices();
+      fetchOrders();
+    }
   }, [user]);
 
   async function fetchServices() {
@@ -36,7 +43,36 @@ export default function PainelPrestador() {
     }
   }
 
-  // === Adicionar novo serviço (POST com FormData) ===
+  async function fetchOrders() {
+    try {
+      const res = await api.get(`/orders/provider/${user.id}`);
+      setOrders(res.data);
+    } catch (err) {
+      console.error("Erro ao carregar pedidos:", err);
+    }
+  }
+
+  // =====================================================
+  // 🟢 Atualizar status do pedido (ACEITAR | RECUSAR | CONCLUIR)
+  // =====================================================
+  async function atualizarStatus(orderId, status) {
+    try {
+      const res = await api.put(`/orders/${orderId}`, { status });
+
+      setOrders((prev) =>
+        prev.map((o) => (o.id === orderId ? res.data : o))
+      );
+
+      alert(`Pedido ${status} com sucesso!`);
+    } catch (err) {
+      console.error("Erro ao atualizar pedido:", err);
+      alert("Erro ao atualizar pedido.");
+    }
+  }
+
+  // =====================================================
+  // ➕ Criar novo serviço
+  // =====================================================
   async function handleAddService(e) {
     e.preventDefault();
 
@@ -58,7 +94,7 @@ export default function PainelPrestador() {
         title: "",
         description: "",
         price: "",
-        image: null,
+        image: null
       });
 
     } catch (err) {
@@ -67,7 +103,9 @@ export default function PainelPrestador() {
     }
   }
 
-  // === Excluir serviço ===
+  // =====================================================
+  // 🗑 Excluir serviço
+  // =====================================================
   async function handleDelete(id) {
     if (!confirm("Tem certeza que deseja excluir este serviço?")) return;
 
@@ -80,24 +118,33 @@ export default function PainelPrestador() {
     }
   }
 
-  // === Modo de edição ===
+  // =====================================================
+  // ✏ Iniciar edição
+  // =====================================================
   function startEditing(service) {
     setEditingId(service.id);
     setEditData({
       title: service.title,
       description: service.description,
       price: service.price,
-      image: null, // novo arquivo será colocado aqui
+      image: null
     });
   }
 
-  // === Cancelar edição ===
+  // Cancelar edição
   function cancelEditing() {
     setEditingId(null);
-    setEditData({ title: "", description: "", price: "", image: null });
+    setEditData({
+      title: "",
+      description: "",
+      price: "",
+      image: null
+    });
   }
 
-  // === Confirmar edição (PUT com FormData) ===
+  // =====================================================
+  // 💾 Salvar edição de serviço
+  // =====================================================
   async function handleEditSubmit(e) {
     e.preventDefault();
 
@@ -106,45 +153,51 @@ export default function PainelPrestador() {
     formData.append("description", editData.description);
     formData.append("price", editData.price);
 
-    if (editData.image) {
-      formData.append("image", editData.image);
-    }
+    if (editData.image) formData.append("image", editData.image);
 
     try {
       const res = await api.put(`/services/${editingId}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      setServices(services.map((s) =>
-        s.id === editingId ? res.data.service : s
-      ));
+      setServices(
+        services.map((s) => (s.id === editingId ? res.data.service : s))
+      );
 
       cancelEditing();
-
     } catch (err) {
       console.error("Erro ao atualizar serviço:", err);
       alert("Erro ao atualizar serviço.");
     }
   }
 
+  // =====================================================
+  // RENDER
+  // =====================================================
   return (
     <div className="painel-container">
-      <h1>Meus Serviços</h1>
+      <h1>Painel do Prestador</h1>
 
-      {/* === Formulário de novo serviço === */}
+      {/* ================================================
+          FORMULÁRIO DE NOVO SERVIÇO
+      ================================================= */}
       <form onSubmit={handleAddService} className="service-form">
         <input
           type="text"
           placeholder="Título"
           value={newService.title}
-          onChange={(e) => setNewService({ ...newService, title: e.target.value })}
+          onChange={(e) =>
+            setNewService({ ...newService, title: e.target.value })
+          }
           required
         />
 
         <textarea
           placeholder="Descrição"
           value={newService.description}
-          onChange={(e) => setNewService({ ...newService, description: e.target.value })}
+          onChange={(e) =>
+            setNewService({ ...newService, description: e.target.value })
+          }
           required
         />
 
@@ -152,11 +205,12 @@ export default function PainelPrestador() {
           type="number"
           placeholder="Preço"
           value={newService.price}
-          onChange={(e) => setNewService({ ...newService, price: e.target.value })}
+          onChange={(e) =>
+            setNewService({ ...newService, price: e.target.value })
+          }
           required
         />
 
-        {/* UPLOAD LOCAL */}
         <input
           type="file"
           accept="image/*"
@@ -168,14 +222,60 @@ export default function PainelPrestador() {
         <button type="submit">Adicionar Serviço</button>
       </form>
 
-      {/* === Lista de serviços === */}
+      {/* ================================================
+          PEDIDOS RECEBIDOS
+      ================================================= */}
+      <h2>Pedidos Recebidos</h2>
+
+      <div className="orders-list">
+        {orders.length === 0 ? (
+          <p>Nenhum pedido recebido ainda.</p>
+        ) : (
+          orders.map((order) => (
+            <div key={order.id} className="order-card">
+
+              <p><strong>Serviço:</strong> {order.service?.title}</p>
+              <p><strong>Cliente:</strong> {order.customer?.name}</p>
+              <p><strong>Email:</strong> {order.customer?.email}</p>
+              <p><strong>Status:</strong> {order.status}</p>
+
+              <div className="order-actions">
+                {order.status === "pendente" && (
+                  <>
+                    <button onClick={() => atualizarStatus(order.id, "aceito")}>
+                      Aceitar
+                    </button>
+                    <button
+                      className="delete"
+                      onClick={() => atualizarStatus(order.id, "recusado")}
+                    >
+                      Recusar
+                    </button>
+                  </>
+                )}
+
+                {order.status === "aceito" && (
+                  <button onClick={() => atualizarStatus(order.id, "concluido")}>
+                    Concluir
+                  </button>
+                )}
+              </div>
+
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* ================================================
+          LISTA DE SERVIÇOS
+      ================================================= */}
       <div className="services-list">
         {services.length === 0 ? (
           <p>Nenhum serviço cadastrado ainda.</p>
         ) : (
           services.map((service) =>
             editingId === service.id ? (
-              // === MODO DE EDIÇÃO ===
+              // =================== MODO DE EDIÇÃO ===================
               <form
                 key={service.id}
                 onSubmit={handleEditSubmit}
@@ -184,7 +284,9 @@ export default function PainelPrestador() {
                 <input
                   type="text"
                   value={editData.title}
-                  onChange={(e) => setEditData({ ...editData, title: e.target.value })}
+                  onChange={(e) =>
+                    setEditData({ ...editData, title: e.target.value })
+                  }
                   required
                 />
 
@@ -199,11 +301,12 @@ export default function PainelPrestador() {
                 <input
                   type="number"
                   value={editData.price}
-                  onChange={(e) => setEditData({ ...editData, price: e.target.value })}
+                  onChange={(e) =>
+                    setEditData({ ...editData, price: e.target.value })
+                  }
                   required
                 />
 
-                {/* UPLOAD DE NOVA IMAGEM AO EDITAR */}
                 <input
                   type="file"
                   accept="image/*"
@@ -214,13 +317,17 @@ export default function PainelPrestador() {
 
                 <div className="edit-buttons">
                   <button type="submit">Salvar</button>
-                  <button type="button" onClick={cancelEditing} className="cancel">
+                  <button
+                    type="button"
+                    onClick={cancelEditing}
+                    className="cancel"
+                  >
                     Cancelar
                   </button>
                 </div>
               </form>
             ) : (
-              // === CARD NORMAL ===
+              // =================== MODO NORMAL ===================
               <div key={service.id} className="service-card">
                 <img
                   src={
@@ -234,9 +341,7 @@ export default function PainelPrestador() {
 
                 <h3>{service.title}</h3>
                 <p>{service.description}</p>
-                <p>
-                  <strong>R$ {Number(service.price).toFixed(2)}</strong>
-                </p>
+                <p><strong>R$ {Number(service.price).toFixed(2)}</strong></p>
 
                 <div className="service-actions">
                   <button onClick={() => startEditing(service)}>Editar</button>

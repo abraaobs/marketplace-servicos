@@ -5,103 +5,120 @@
 **Curso:** Análise e Desenvolvimento de Sistemas  
 **Período:** 2025.2  
 **Autor:** Abraão Silva  
-<<<<<<< HEAD
-**Instituição:** UEPB 
-
-=======
-**Instituição:** —  
-**Orientador:** —  
->>>>>>> 162e572ae90dcff2f8b854a7dec2b09e89056d8f
+**Instituição:** UEPB  
 
 ---
 
 ## 🧩 Descrição Geral
 
-O **Marketserv** é um *marketplace de serviços* que conecta clientes a prestadores de forma simples, rápida e acessível.  
-A aplicação permite ao usuário visualizar serviços por categoria, realizar buscas filtradas e interagir com um catálogo de prestadores.  
+O **Marketserv** é um marketplace de serviços que conecta clientes e prestadores de forma simples e eficiente.  
 
-O sistema foi desenvolvido com **arquitetura full-stack**, integrando **frontend em React** com **backend em Node.js e Express**, e banco de dados **SQLite**.  
-O projeto representa a aplicação prática dos conhecimentos adquiridos na disciplina de **Desenvolvimento Full Stack**, enfatizando a integração entre camadas, a usabilidade e a persistência de dados.
+A plataforma permite:
+
+- Que **prestadores cadastrem e editem serviços**, incluindo **upload de imagens locais**.  
+- Que **clientes contratem serviços** diretamente pela interface.  
+- Que **pedidos sejam gerenciados** tanto pelo cliente quanto pelo prestador.  
+- Que o sistema mantenha todo o fluxo de trabalho de forma organizada, desde o cadastro até a conclusão do pedido.
 
 ---
 
 ## 🎯 Objetivos do Projeto
 
-- Desenvolver uma aplicação web completa (cliente-servidor).  
-- Implementar autenticação, cadastro e listagem de serviços.  
-- Criar interface intuitiva e responsiva com React e Bootstrap.  
-- Integrar o frontend com API REST no backend Express.  
-- Demonstrar práticas de versionamento e modularização com Git e GitHub.
+- Criar uma aplicação web completa utilizando arquitetura full stack.  
+- Implementar autenticação para clientes e prestadores.  
+- Fornecer um ambiente de gestão de serviços e pedidos.  
+- Integrar frontend e backend através de uma API REST.  
+- Utilizar banco de dados relacional com Sequelize.  
+- Manter versionamento completo via Git e GitHub.  
 
 ---
 
 ## ⚙️ Tecnologias Utilizadas
 
-| Camada | Tecnologias e Ferramentas |
-|--------|----------------------------|
-| **Frontend** | React, Vite, Bootstrap 5, CSS |
-| **Backend** | Node.js, Express, Sequelize, SQLite |
-| **Controle de Versão** | Git, GitHub |
-| **Ambiente de Desenvolvimento** | Visual Studio Code, Node 18+ |
+| Camada | Ferramentas |
+|--------|-------------|
+| **Frontend** | React, Vite, CSS, Context API, Fetch/Axios |
+| **Backend** | Node.js, Express, Sequelize, Multer, JWT |
+| **Banco de Dados** | SQLite |
+| **Ambiente** | VS Code, Node 18+ |
+| **Versionamento** | Git + GitHub |
 
 ---
 
 ## 🧱 Estrutura de Diretórios
 
-marketplace-servicos/
-├── backend/ → servidor Node.js (API REST)
-│ ├── src/
-│ │ ├── routes/ → rotas de autenticação e serviços
-│ │ ├── models/ → modelos Sequelize
-│ │ └── server.js → inicialização da API
-│ ├── package.json
-│ └── .env
+```
+Marketserv/
+├── backend/
+│   ├── src/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── middleware/upload.js
+│   │   └── server.js
+│   ├── uploads/
+│   └── database.sqlite
 │
-├── frontend/ → aplicação React (Vite)
-│ ├── src/
-│ │ ├── components/ → componentes reutilizáveis (cards, categorias)
-│ │ ├── pages/ → páginas principais (Home, Login, Register, Painéis)
-│ │ ├── api.js → central de chamadas à API
-│ │ └── App.jsx → estrutura principal de rotas
-│ ├── index.html
-│ └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── pages/
+│   │   ├── context/
+│   │   ├── api.js
+│   │   └── App.jsx
 │
 └── README.md
-
+```
 
 ---
 
 ## 💡 Funcionalidades Implementadas
 
-- Página inicial com categorias interativas e ícones (Bootstrap).  
-- Filtro dinâmico por categoria (“Pintura & Reforma”, “Limpeza”, “Tecnologia”, etc).  
-- Botão **“Outros Serviços”** para exibir todos os resultados.  
-- Barra de pesquisa funcional com atualização instantânea.  
-- Listagem de serviços cadastrados via API.  
-- Login e cadastro de usuários (cliente e prestador).  
-- Painel de cliente e de prestador com acesso restrito.  
-- Layout responsivo e moderno, adaptado para desktop e mobile.  
+### 👤 Autenticação
+- Login e cadastro de usuários (cliente e prestador)
+- Proteção de rotas com Context API
+- Persistência de sessão
+
+### 🛒 Clientes
+- Listagem de serviços
+- Contratação
+- Histórico de serviços contratados
+- Exibição do prestador e status do pedido
+
+### 🧑‍🔧 Prestadores
+- Cadastro, edição e exclusão de serviços
+- Upload de imagens
+- Listagem de pedidos recebidos
+- Aceitar, recusar ou concluir pedidos
+
+### 🔗 Backend (API REST)
+- CRUD de serviços
+- CRUD de pedidos
+- Upload de arquivos estáticos
+
+### 🌐 Extras
+- Cotação USD, EUR e BTC em tempo real
+- Interface responsiva
 
 ---
 
-## 🚀 Execução do Projeto
+## 🚀 Execução
 
-### 🔧 Pré-requisitos
-- **Node.js** instalado (versão 18 ou superior)
-- **Git** instalado para versionamento
-
-### 🧭 Passos de Instalação e Execução
-
-# Clonar o repositório
-git clone https://github.com/abraaobs/marketplace-servicos.git
-cd marketplace-servicos
-
-# Backend
+### Backend
+```
 cd backend
 npm install
 npm run dev
+```
 
-# Frontend
-cd ../frontend
+### Frontend
+```
+cd frontend
 npm install
 npm run dev
+```
+
+---
+
+## ✔️ Status
+Projeto completo e funcional.
+
+---
